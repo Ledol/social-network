@@ -3,12 +3,14 @@
     background-color: #354259;
     grid-area: nav;
     width: 200px;
+    padding: 20px;
 }
 
 .item a {
     color: white;
     text-decoration: none;
     padding: 10px;
+
 }
 
 .item a.activeLink {
