@@ -1,7 +1,7 @@
 .app-wrapper {
   margin: 0 auto;
   display: grid;
-  width: 1250px ;
+  width: 1200px ;
   grid-template-areas:
             'header header header'
             'nav content content'
@@ -17,7 +17,7 @@
 
 }
 .contentIMG {
-  width: 1130px;
+  width: 1000px;
   height: 200px;
 
 }
