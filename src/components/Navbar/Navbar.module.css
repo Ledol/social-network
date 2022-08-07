@@ -2,6 +2,7 @@
 .nav {
     background-color: #354259;
     grid-area: nav;
+    width: 200px;
 }
 
 .item a {
@@ -10,5 +11,5 @@
 }
 
 .item a.activeLink {
-    color: gold;
+    color: #FF5D5D;
 }
