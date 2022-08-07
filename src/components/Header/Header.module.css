@@ -4,6 +4,10 @@
     grid-area: header;
 }
 
-header img {
+.header img {
     width: 60px;
+    padding-left: 20px;
 }
+
+
+
