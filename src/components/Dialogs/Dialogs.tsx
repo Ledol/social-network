@@ -1,45 +1,40 @@
-import React, {FC} from 'react';
+import React from 'react';
 import style from './Dialogs.module.css'
-import {NavLink} from "react-router-dom";
+import {DialogItem} from "./DialogItem/DialogItem";
+import {Message} from "./Message/Message";
 
-type DialogsItemPropsType = {
-    name: string
-    id: number
-}
 
-const DialogsItem: FC<DialogsItemPropsType> = ({name, id}) => {
-    const path = '/dialogs/' + id
-    return <div className={style.dialog}>
-        <NavLink to={path} >{name}</NavLink>
-    </div>
-}
 
-type MessagePropsType = {
-    message: string
-}
+const dialogsData = [
+    {id: 1, name: 'Dima'},
+    {id: 2, name: 'Kate'},
+    {id: 3, name: 'Alex'},
+    {id: 4, name: 'Mike'},
+    {id: 5, name: 'Helen'},
+]
 
-const Message: FC<MessagePropsType> = ({message}) => {
-    return <div className={style.message}>{message}</div>
-}
+
+const messagesData = [
+    {id: 1, message: 'Hey, how are you?'},
+    {id: 2, message: 'Are you really?'},
+    {id: 3, message: 'Have a good day!'},
+    {id: 4, message: 'Wake up!'},
+    {id: 5, message: 'Dear, what\'s wrong?'},
+]
+
+let dialogsElement = dialogsData.map(dialog => <DialogItem key={dialog.id} id={dialog.id} name={dialog.name}/>)
+let messagesElement = messagesData.map(m => <Message key={m.id} message={m.message}/>)
 
 
 export const Dialogs = () => {
     return (
         <div className={style.dialogs}>
-           <div className={style.dialogsItem}>
-               <DialogsItem name='Dima' id={1} />
-               <DialogsItem name='Kate' id={2} />
-               <DialogsItem name='Alex' id={3} />
-               <DialogsItem name='Mike' id={4} />
-               <DialogsItem name='Helen' id={5} />
-           </div>
-           <div className={style.messages}>
-               <Message message='Hey, how are you?'/>
-               <Message message='Are you really?'/>
-               <Message message='Have a good day!'/>
-               <Message message='Wake up!'/>
-               <Message message="Dear, what's wrong?"/>
-           </div>
+            <div className={style.dialogsItem}>
+                {dialogsElement}
+            </div>
+            <div className={style.messages}>
+                {messagesElement}
+            </div>
         </div>
     );
 };
