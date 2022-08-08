@@ -1,15 +1,12 @@
 import React, {FC} from 'react';
 import style from './Post.module.css'
+import {PostsType} from "../../../../redux/State";
 
 
-export type PostType = {
-    message: string
-    likesCount: number
-    id: number
-}
 
 
-export const Post: FC<PostType> = ({message, likesCount}) => {
+
+export const Post: FC<PostsType> = ({message, likesCount }) => {
     return (
         <div className={style.discriptionBlock}>
             <img className={style.imgUser}

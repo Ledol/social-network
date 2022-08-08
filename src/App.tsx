@@ -3,15 +3,17 @@ import './App.css';
 import {Navbar} from "./components/Navbar/Navbar";
 import {Header} from "./components/Header/Header";
 import {Profile} from "./components/Profile/Profile";
-import {Dialogs, DialogsType} from "./components/Dialogs/Dialogs";
+import {Dialogs} from "./components/Dialogs/Dialogs";
 import {BrowserRouter, Route} from "react-router-dom";
 import {Music} from "./components/Music/Music";
 import {News} from "./components/News/News";
 import {Setting} from "./components/Setting/Setting";
-import {MyPostsType} from "./components/Profile/MyPosts/MyPosts";
+import {RootStateType} from "./redux/State";
 
 
-type AppPropsType = MyPostsType & DialogsType
+type AppPropsType = {
+    state: RootStateType
+}
 
 
 function App (props: AppPropsType) {
@@ -22,10 +24,11 @@ function App (props: AppPropsType) {
         <Navbar/>
         <div className='app-wrapper-content'>
             <Route path="/profile" render={()=> {
-                return <Profile postsData={props.postsData} />
+                return <Profile posts={props.state.profilePage.posts} />
             }} />
             <Route path="/dialogs" render={()=> {
-                return  <Dialogs dialogsData={props.dialogsData} messagesData={props.messagesData} />
+                return  <Dialogs dialogs={props.state.dialogsPage.dialogs}
+                                 messages={props.state.dialogsPage.messages} />
             }} />
             <Route path="/news" component={News} />
             <Route path="/music" component={Music} />
