@@ -5,6 +5,7 @@ import style from './Post.module.css'
 export type PostType = {
     message: string
     likesCount: number
+    id: number
 }
 
 

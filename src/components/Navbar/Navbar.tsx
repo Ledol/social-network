@@ -8,7 +8,7 @@ export const Navbar = () => {
                <NavLink to='/profile' activeClassName={style.activeLink}>Profile</NavLink>
             </div>
             <div className={style.item}>
-                <NavLink to='/dialogs' activeClassName={style.activeLink}>Dialogs</NavLink>
+                <NavLink to='/dialogs' activeClassName={style.activeLink}>Messages</NavLink>
             </div>
             <div className={style.item}>
                 <NavLink to='/news' activeClassName={style.activeLink}>News</NavLink>

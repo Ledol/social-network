@@ -3,8 +3,9 @@ import style from "../Dialogs.module.css";
 
 
 
-type MessagePropsType = {
+export type MessagePropsType = {
     message: string
+    id: number
 }
 
 
