@@ -1,0 +1,13 @@
+.item a {
+    color: #ECE5C7;
+    text-decoration: none;
+}
+.item a.activeLink {
+    color: black;
+}
+
+.imgUser {
+    width: 40px;
+    border-radius: 20px;
+}
+
