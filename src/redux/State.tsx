@@ -1,3 +1,8 @@
+let rerenderEntireTree = () => {
+    console.log('state was change')
+};
+
+
 export type MessageType = {
     id: number
     message: string
@@ -18,10 +23,12 @@ export type FriendsType = {
 }
 export type ProfilePageType = {
     posts: Array<PostsType>
+    newPostText: string
 }
 export type DialogsPageType = {
     dialogs: Array<DialogsType>
     messages: Array<MessageType>
+    newMessageText: string
 }
 export type FriendsPageType = {
     friends: Array<FriendsType>
@@ -35,14 +42,13 @@ export type RootStateType = {
 
 
 
-
-
 export let state = {
     profilePage: {
         posts: [
             {id: 1, message: 'Hi, how are you?', likesCount: 15},
             {id: 2, message: 'What\'s, wrong?', likesCount: 25},
-        ]
+        ],
+        newPostText: '',
     },
     dialogsPage: {
         dialogs: [
@@ -59,6 +65,7 @@ export let state = {
             {id: 4, message: 'Wake up!'},
             {id: 5, message: 'Dear, what\'s wrong?'},
         ],
+        newMessageText: ''
     },
     sidebar: {
         friends: [
@@ -80,4 +87,35 @@ export let state = {
 
         ]
     }
+}
+
+export const addPost = (postText: string) => {
+    let newPost: PostsType = {
+        id: new Date().getTime(),
+        message: postText,
+        likesCount: 0}
+    state.profilePage.posts.push(newPost)
+    rerenderEntireTree()
+}
+
+export const changePostText = (newPost: string) => {
+    state.profilePage.newPostText = newPost
+    rerenderEntireTree()
+}
+
+export const addMessage = (messageText: string) => {
+    let newMessage:MessageType  = {
+        id: new Date().getTime(),
+        message: messageText,}
+    state.dialogsPage.messages.push(newMessage)
+    rerenderEntireTree()
+}
+
+export const changeMessageText = (newMessage: string) => {
+    state.dialogsPage.newMessageText  = newMessage
+    rerenderEntireTree()
+}
+
+export const subscriber = (observer: () => void) => {
+    rerenderEntireTree = observer
 }
