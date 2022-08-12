@@ -34,18 +34,27 @@ export type RootStateType = {
     dialogsPage: DialogsPageType
     sidebar: FriendsPageType
 }
+export type DispatchType = AddPostType | ChangePostText
+
+
+ type AddPostType = {
+    type: "ADD-POST"
+    postText: string
+}
+ type ChangePostText = {
+    type: "CHANGE-POST-TEXT"
+    newPost: string
+}
+
 
 export type StoreType = {
     _state: RootStateType
-    addPost: (postText: string) => void
-    changePostText: (newPost: string) => void
-    addMessage: (messageText: string) => void
-    changeMessageText: (newMessage: string) => void
     _onChange: () => void
     subscriber: (observer: () => void) => void
     getState: () => RootStateType
-
-
+    addMessage: (messageText: string) => void
+    changeMessageText: (newMessage: string) => void
+    dispatch: (action: DispatchType) => void
 
 }
 
@@ -96,18 +105,18 @@ export const store: StoreType = {
             ]
         }
     },
-    addPost (postText: string)  {
-        let newPost: PostsType = {
-            id: new Date().getTime(),
-            message: postText,
-            likesCount: 0}
-        this._state.profilePage.posts.push(newPost)
-        this._onChange()
+    _onChange () {
+        console.log('state was change')
     },
-    changePostText (newPost: string) {
-        this._state.profilePage.newPostText = newPost
-        this._onChange()
+
+    subscriber (observer) {
+        this._onChange = observer
     },
+    getState () {
+        return this._state
+    },
+
+
     addMessage (messageText: string)  {
         let newMessage:MessageType  = {
             id: new Date().getTime(),
@@ -119,15 +128,27 @@ export const store: StoreType = {
         this._state.dialogsPage.newMessageText  = newMessage
         this._onChange()
     },
-    _onChange () {
-        console.log('state was change')
-    },
-    subscriber (observer) {
-        this._onChange = observer
-    },
-    getState () {
-        return this._state
+    dispatch (action) {
+        switch (action.type) {
+            case "ADD-POST" : {
+                let newPost: PostsType = {
+                    id: new Date().getTime(),
+                    message: action.postText,
+                    likesCount: 0}
+                this._state.profilePage.posts.push(newPost)
+                this._onChange()
+                break;
+            }
+            case "CHANGE-POST-TEXT" : {
+                this._state.profilePage.newPostText = action.newPost
+                this._onChange()
+                break;
+            }
+            default: alert("Don't correct action!")
+        }
     }
+
+
 
 }
 
