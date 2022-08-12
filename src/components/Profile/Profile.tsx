@@ -5,13 +5,11 @@ import {ProfilePageType} from "../../redux/State";
 
 
 
-export const Profile: FC<ProfilePageType & MyPostsType> = ({posts, addPost,changePostText, newPostText}) => {
+export const Profile: FC<ProfilePageType & MyPostsType> = ({posts, newPostText, dispatch}) => {
     return (
         <div>
             <ProfileInfo/>
-            <MyPosts posts={posts}
-                     addPost={addPost}
-                     changePostText={changePostText}
+            <MyPosts posts={posts} dispatch={dispatch}
                      newPostText={newPostText}  />
         </div>
     );
