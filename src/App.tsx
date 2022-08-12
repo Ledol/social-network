@@ -3,41 +3,42 @@ import './App.css';
 import {Navbar} from "./components/Navbar/Navbar";
 import {Header} from "./components/Header/Header";
 import {Profile} from "./components/Profile/Profile";
-import {Dialogs, PropsType} from "./components/Dialogs/Dialogs";
+import {Dialogs} from "./components/Dialogs/Dialogs";
 import {Route} from "react-router-dom";
 import {Music} from "./components/Music/Music";
 import {News} from "./components/News/News";
 import {Setting} from "./components/Setting/Setting";
-import { RootStateType} from "./redux/State";
+import { StoreType} from "./redux/State";
 import {Friends} from "./components/Friends/Friends";
-import {MyPostsType} from "./components/Profile/MyPosts/MyPosts";
 
 
-type AppPropsType = MyPostsType & PropsType & {
-    state: RootStateType
+
+type AppPropsType =  {
+    store: StoreType
 }
 
 
 function App (props: AppPropsType) {
+    const state = props.store.getState()
   return (
 
     <div className="app-wrapper">
         <Header/>
         <Navbar/>
-        <Friends friends={props.state.sidebar.friends}/>
+        <Friends friends={state.sidebar.friends}/>
         <div className='app-wrapper-content'>
             <Route path="/profile" render={()=> {
-                return <Profile posts={props.state.profilePage.posts}
-                                addPost={props.addPost}
-                                changePostText={props.changePostText}
-                                newPostText={props.state.profilePage.newPostText} />
+                return <Profile posts={state.profilePage.posts}
+                                addPost={props.store.addPost.bind(props.store)}
+                                changePostText={props.store.changePostText.bind(props.store)}
+                                newPostText={state.profilePage.newPostText} />
             }} />
             <Route path="/dialogs" render={()=> {
-                return  <Dialogs dialogs={props.state.dialogsPage.dialogs}
-                                 messages={props.state.dialogsPage.messages}
-                                 addMessage={props.addMessage}
-                                 changeMessageText={props.changeMessageText}
-                                 newMessageText={props.state.dialogsPage.newMessageText}
+                return  <Dialogs dialogs={state.dialogsPage.dialogs}
+                                 messages={state.dialogsPage.messages}
+                                 addMessage={props.store.addMessage.bind(props.store)}
+                                 changeMessageText={props.store.changeMessageText.bind(props.store)}
+                                 newMessageText={state.dialogsPage.newMessageText}
                 />
             }} />
             <Route path="/news" component={News} />
