@@ -35,8 +35,7 @@ function App (props: AppPropsType) {
             <Route path="/dialogs" render={()=> {
                 return  <Dialogs dialogs={state.dialogsPage.dialogs}
                                  messages={state.dialogsPage.messages}
-                                 addMessage={props.store.addMessage.bind(props.store)}
-                                 changeMessageText={props.store.changeMessageText.bind(props.store)}
+                                 dispatch={props.store.dispatch.bind(props.store)}
                                  newMessageText={state.dialogsPage.newMessageText}
                 />
             }} />

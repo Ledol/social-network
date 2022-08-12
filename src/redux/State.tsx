@@ -34,7 +34,7 @@ export type RootStateType = {
     dialogsPage: DialogsPageType
     sidebar: FriendsPageType
 }
-export type DispatchType = AddPostType | ChangePostText
+export type DispatchType = AddPostType | ChangePostText | AddMessageType | ChangeMessageText
 
 
  type AddPostType = {
@@ -45,6 +45,14 @@ export type DispatchType = AddPostType | ChangePostText
     type: "CHANGE-POST-TEXT"
     newPost: string
 }
+ type AddMessageType = {
+    type: "ADD-MESSAGE"
+    messageText: string
+}
+ type ChangeMessageText = {
+    type: "CHANGE-MESSAGE-TEXT"
+     newMessage: string
+}
 
 
 export type StoreType = {
@@ -52,8 +60,6 @@ export type StoreType = {
     _onChange: () => void
     subscriber: (observer: () => void) => void
     getState: () => RootStateType
-    addMessage: (messageText: string) => void
-    changeMessageText: (newMessage: string) => void
     dispatch: (action: DispatchType) => void
 
 }
@@ -116,18 +122,6 @@ export const store: StoreType = {
         return this._state
     },
 
-
-    addMessage (messageText: string)  {
-        let newMessage:MessageType  = {
-            id: new Date().getTime(),
-            message: messageText,}
-        this._state.dialogsPage.messages.push(newMessage)
-        this._onChange()
-    },
-    changeMessageText (newMessage: string) {
-        this._state.dialogsPage.newMessageText  = newMessage
-        this._onChange()
-    },
     dispatch (action) {
         switch (action.type) {
             case "ADD-POST" : {
@@ -141,6 +135,19 @@ export const store: StoreType = {
             }
             case "CHANGE-POST-TEXT" : {
                 this._state.profilePage.newPostText = action.newPost
+                this._onChange()
+                break;
+            }
+            case "ADD-MESSAGE" : {
+                let newMessage:MessageType  = {
+                    id: new Date().getTime(),
+                    message: action.messageText,}
+                this._state.dialogsPage.messages.push(newMessage)
+                this._onChange()
+                break;
+            }
+            case "CHANGE-MESSAGE-TEXT" : {
+                this._state.dialogsPage.newMessageText  = action.newMessage
                 this._onChange()
                 break;
             }

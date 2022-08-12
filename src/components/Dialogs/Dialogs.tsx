@@ -2,26 +2,31 @@ import React, {ChangeEvent, FC} from 'react';
 import style from './Dialogs.module.css'
 import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
-import {DialogsPageType} from "../../redux/State";
+import {DialogsPageType, DispatchType} from "../../redux/State";
 
 export type PropsType = {
-    addMessage: (messageText: string) => void
-    changeMessageText: (newMessage: string) => void
+    dispatch: (action: DispatchType) => void
 }
 
-export const Dialogs: FC<DialogsPageType & PropsType> = ({dialogs, messages, addMessage, changeMessageText,newMessageText}) => {
+export const Dialogs: FC<DialogsPageType & PropsType> = (
+    {
+        dialogs,
+        messages,
+        newMessageText,
+        dispatch
+    }) => {
 
     let dialogsElement = dialogs.map(dialog => <DialogItem key={dialog.id} id={dialog.id} name={dialog.name}/>)
     let messagesElement = messages.map(m => <Message key={m.id} id={m.id} message={m.message}/>)
 
 
     const addNewMessage = () => {
-        addMessage(newMessageText)
-        changeMessageText('')
+        dispatch({type: "ADD-MESSAGE", messageText: newMessageText})
+        dispatch({type: "CHANGE-MESSAGE-TEXT", newMessage: ''})
     }
 
     const onChangeMessageHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        changeMessageText(e.currentTarget.value)
+        dispatch({type: "CHANGE-MESSAGE-TEXT", newMessage: e.currentTarget.value})
     }
 
 
@@ -34,7 +39,7 @@ export const Dialogs: FC<DialogsPageType & PropsType> = ({dialogs, messages, add
                 {messagesElement}
             </div>
             <div>
-                <textarea value={newMessageText} onChange={onChangeMessageHandler} ></textarea>
+                <textarea value={newMessageText} onChange={onChangeMessageHandler}></textarea>
                 <button onClick={addNewMessage}>New message</button>
             </div>
         </div>
