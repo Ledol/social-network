@@ -1,7 +1,7 @@
 import React, {ChangeEvent, FC} from 'react';
 import {Post} from "./Post/Post";
 import style from './MyPosts.module.css'
-import {DispatchType, ProfilePageType} from "../../../redux/State";
+import {addPostAC, changePostTextAC, DispatchType, ProfilePageType} from "../../../redux/State";
 
 export type MyPostsType = {
     dispatch: (action: DispatchType) => void
@@ -15,11 +15,11 @@ export const MyPosts: FC<ProfilePageType & MyPostsType> = ({posts, newPostText,d
 
 
     const addNewPost = () => {
-        dispatch({type: "ADD-POST", postText: newPostText})
-        dispatch({type: "CHANGE-POST-TEXT", newPost: '' })
+        dispatch(addPostAC(newPostText))
+        dispatch(changePostTextAC(''))
     }
     const onChangePostHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        dispatch({type: "CHANGE-POST-TEXT", newPost: e.currentTarget.value })
+        dispatch(changePostTextAC(e.currentTarget.value))
     }
 
 

@@ -34,25 +34,9 @@ export type RootStateType = {
     dialogsPage: DialogsPageType
     sidebar: FriendsPageType
 }
-export type DispatchType = AddPostType | ChangePostText | AddMessageType | ChangeMessageText
+export type DispatchType = addPostACType | changePostTextACType | addNewMessageACType | changeMessageTextACType
 
 
- type AddPostType = {
-    type: "ADD-POST"
-    postText: string
-}
- type ChangePostText = {
-    type: "CHANGE-POST-TEXT"
-    newPost: string
-}
- type AddMessageType = {
-    type: "ADD-MESSAGE"
-    messageText: string
-}
- type ChangeMessageText = {
-    type: "CHANGE-MESSAGE-TEXT"
-     newMessage: string
-}
 
 
 export type StoreType = {
@@ -61,7 +45,6 @@ export type StoreType = {
     subscriber: (observer: () => void) => void
     getState: () => RootStateType
     dispatch: (action: DispatchType) => void
-
 }
 
 export const store: StoreType = {
@@ -127,35 +110,63 @@ export const store: StoreType = {
             case "ADD-POST" : {
                 let newPost: PostsType = {
                     id: new Date().getTime(),
-                    message: action.postText,
+                    message: action.payload.newPostText,
                     likesCount: 0}
                 this._state.profilePage.posts.push(newPost)
                 this._onChange()
                 break;
             }
             case "CHANGE-POST-TEXT" : {
-                this._state.profilePage.newPostText = action.newPost
+                this._state.profilePage.newPostText = action.payload.newPost
                 this._onChange()
                 break;
             }
             case "ADD-MESSAGE" : {
                 let newMessage:MessageType  = {
                     id: new Date().getTime(),
-                    message: action.messageText,}
+                    message: action.payload.messageText,}
                 this._state.dialogsPage.messages.push(newMessage)
                 this._onChange()
                 break;
             }
             case "CHANGE-MESSAGE-TEXT" : {
-                this._state.dialogsPage.newMessageText  = action.newMessage
+                this._state.dialogsPage.newMessageText  = action.payload.newMessage
                 this._onChange()
                 break;
             }
             default: alert("Don't correct action!")
         }
     }
-
-
-
 }
 
+// (Profile) AC for My posts
+export type addPostACType = ReturnType<typeof addPostAC>
+export const addPostAC = (newPostText: string) => {
+    return {
+        type: "ADD-POST",
+        payload: {newPostText}
+    }as const
+}
+export type changePostTextACType = ReturnType<typeof changePostTextAC>
+export const changePostTextAC = (newPost: string) => {
+    return {
+        type: "CHANGE-POST-TEXT",
+        payload: {newPost}
+    }as const
+}
+
+// (Dialogs) AC for New Message
+export type addNewMessageACType = ReturnType<typeof addNewMessageAC>
+export const addNewMessageAC = (messageText: string) => {
+    return {
+        type: "ADD-MESSAGE",
+        payload: {messageText}
+    }as const
+}
+export type changeMessageTextACType = ReturnType<typeof changeMessageTextAC>
+export const changeMessageTextAC = (newMessage: string) => {
+    return {
+        type: "CHANGE-MESSAGE-TEXT",
+        payload: {newMessage}
+    }as const
+}
