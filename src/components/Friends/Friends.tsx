@@ -1,6 +1,6 @@
 import React from 'react';
 import s from './Friends.module.css'
-import {FriendsPageType} from "../../redux/State";
+import {FriendsPageType} from "../../redux/Store";
 import {FriendItem} from "./FriendItem/FriendItem";
 import style from "../Navbar/Navbar.module.css";
 import {NavLink} from "react-router-dom";
