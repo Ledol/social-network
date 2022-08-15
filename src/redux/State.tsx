@@ -1,3 +1,5 @@
+import {addPostACType, changePostTextACType, profileReducer} from "./profileReducer";
+import {changeMessageTextACType, dialogsReducer, sendNewMessageACType} from "./dialogsReducer";
 
 export type MessageType = {
     id: number
@@ -34,7 +36,7 @@ export type RootStateType = {
     dialogsPage: DialogsPageType
     sidebar: FriendsPageType
 }
-export type DispatchType = addPostACType | changePostTextACType | addNewMessageACType | changeMessageTextACType
+export type DispatchType = addPostACType | changePostTextACType | sendNewMessageACType | changeMessageTextACType
 
 
 
@@ -106,41 +108,15 @@ export const store: StoreType = {
     },
 
     dispatch (action) {
-        switch (action.type) {
-            case "ADD-POST" : {
-                let newPost: PostsType = {
-                    id: new Date().getTime(),
-                    message: action.payload.newPostText,
-                    likesCount: 0}
-                this._state.profilePage.posts.push(newPost)
-                this._onChange()
-                break;
-            }
-            case "CHANGE-POST-TEXT" : {
-                this._state.profilePage.newPostText = action.payload.newPost
-                this._onChange()
-                break;
-            }
-            case "ADD-MESSAGE" : {
-                let newMessage:MessageType  = {
-                    id: new Date().getTime(),
-                    message: action.payload.messageText,}
-                this._state.dialogsPage.messages.push(newMessage)
-                this._onChange()
-                break;
-            }
-            case "CHANGE-MESSAGE-TEXT" : {
-                this._state.dialogsPage.newMessageText  = action.payload.newMessage
-                this._onChange()
-                break;
-            }
-            default: alert("Don't correct action!")
-        }
+        this._state.profilePage = profileReducer(this._state.profilePage, action)
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
+        this._onChange()
+
     }
 }
 
 // (Profile) AC for My posts
-export type addPostACType = ReturnType<typeof addPostAC>
+/*export type addPostACType = ReturnType<typeof addPostAC>
 export const addPostAC = (newPostText: string) => {
     return {
         type: "ADD-POST",
@@ -153,14 +129,15 @@ export const changePostTextAC = (newPost: string) => {
         type: "CHANGE-POST-TEXT",
         payload: {newPost}
     }as const
-}
+}*/
 
 // (Dialogs) AC for New Message
+/*
 export type addNewMessageACType = ReturnType<typeof addNewMessageAC>
-export const addNewMessageAC = (messageText: string) => {
+export const addNewMessageAC = (newMessageText: string) => {
     return {
         type: "ADD-MESSAGE",
-        payload: {messageText}
+        payload: {newMessageText}
     }as const
 }
 export type changeMessageTextACType = ReturnType<typeof changeMessageTextAC>
@@ -169,4 +146,4 @@ export const changeMessageTextAC = (newMessage: string) => {
         type: "CHANGE-MESSAGE-TEXT",
         payload: {newMessage}
     }as const
-}
+}*/
