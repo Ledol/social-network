@@ -115,35 +115,3 @@ export const store: StoreType = {
     }
 }
 
-// (Profile) AC for My posts
-/*export type addPostACType = ReturnType<typeof addPostAC>
-export const addPostAC = (newPostText: string) => {
-    return {
-        type: "ADD-POST",
-        payload: {newPostText}
-    }as const
-}
-export type changePostTextACType = ReturnType<typeof changePostTextAC>
-export const changePostTextAC = (newPost: string) => {
-    return {
-        type: "CHANGE-POST-TEXT",
-        payload: {newPost}
-    }as const
-}*/
-
-// (Dialogs) AC for New Message
-/*
-export type addNewMessageACType = ReturnType<typeof addNewMessageAC>
-export const addNewMessageAC = (newMessageText: string) => {
-    return {
-        type: "ADD-MESSAGE",
-        payload: {newMessageText}
-    }as const
-}
-export type changeMessageTextACType = ReturnType<typeof changeMessageTextAC>
-export const changeMessageTextAC = (newMessage: string) => {
-    return {
-        type: "CHANGE-MESSAGE-TEXT",
-        payload: {newMessage}
-    }as const
-}*/
