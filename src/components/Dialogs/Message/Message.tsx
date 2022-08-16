@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import style from "../Dialogs.module.css";
-import {MessageType} from "../../../redux/Store";
+import {MessageType} from "../../../redux/dialogsReducer";
 
 
 

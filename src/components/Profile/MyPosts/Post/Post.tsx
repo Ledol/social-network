@@ -1,6 +1,7 @@
 import React, {FC} from 'react';
 import style from './Post.module.css'
-import {PostsType} from "../../../../redux/Store";
+import {PostsType} from "../../../../redux/profileReducer";
+
 
 
 
