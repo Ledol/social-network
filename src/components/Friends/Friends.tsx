@@ -1,11 +1,13 @@
 import React from 'react';
 import s from './Friends.module.css'
-import {FriendsPageType} from "../../redux/Store";
 import {FriendItem} from "./FriendItem/FriendItem";
 import style from "../Navbar/Navbar.module.css";
 import {NavLink} from "react-router-dom";
+import {FriendsType} from "../../redux/sidebarReducer";
 
-
+export type FriendsPageType = {
+    friends: Array<FriendsType>
+}
 
 export const Friends = (props: FriendsPageType) => {
 
