@@ -4,13 +4,12 @@ import style from './MyPosts.module.css'
 import {MyPostsPropsType} from "./MyPostsContainer";
 
 
-
 export const MyPosts: FC<MyPostsPropsType> = (
     {
         posts,
         newPostText,
         updateNewPost,
-        addPost,
+        addNewPost,
     }) => {
 
     let postsElement = posts.map(post => {
@@ -21,12 +20,11 @@ export const MyPosts: FC<MyPostsPropsType> = (
         />
     })
 
-    const addNewPost = () => {
-        addPost()
+    const addPostHandler = () => {
+        addNewPost()
     }
     const onChangePostHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        let newPost = e.currentTarget.value
-        updateNewPost(newPost)
+        updateNewPost(e.currentTarget.value)
     }
 
     return (
@@ -34,7 +32,7 @@ export const MyPosts: FC<MyPostsPropsType> = (
             <h3> My Posts</h3>
             <div>
                 <textarea value={newPostText} onChange={onChangePostHandler}></textarea>
-                <button onClick={addNewPost}>Add Post</button>
+                <button onClick={addPostHandler}>Add Post</button>
                 {postsElement}
             </div>
         </div>

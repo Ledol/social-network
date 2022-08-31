@@ -1,16 +1,13 @@
-import React, {FC} from 'react';
-import {MyPosts, MyPostsType} from "./MyPosts/MyPosts";
+import React from 'react';
 import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
-import {ProfilePageType} from "../../redux/Store";
+import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
 
 
-
-export const Profile: FC<ProfilePageType & MyPostsType> = ({posts, newPostText, dispatch}) => {
+export const Profile = () => {
     return (
         <div>
             <ProfileInfo/>
-            <MyPosts posts={posts} dispatch={dispatch}
-                     newPostText={newPostText}  />
+            <MyPostsContainer/>
         </div>
     );
 };
