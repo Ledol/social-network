@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from "react-redux";
 import {Friends} from "./Friends";
 import {AppStateType} from "../../redux/redux-store";
-import {FriendsType} from "../../redux/sidebar.Reducer";
+import {FriendsType} from "../../redux/sidebarReducer";
 
 
 
