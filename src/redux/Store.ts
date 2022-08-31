@@ -1,47 +1,48 @@
-import {addPostACType, changePostTextACType, profileReducer} from "./profileReducer";
-import {changeMessageTextACType, dialogsReducer, sendNewMessageACType} from "./dialogsReducer";
+import {addPostACType, updatePostTextACType, profileReducer} from "./profileReducer";
+import {updateNewMessageACType, dialogsReducer, sendNewMessageACType} from "./dialogsReducer";
+import {sidebarReducer} from "./sidebarReducer";
 
-export type MessageType = {
+ type MessageType = {
     id: number
     message: string
 }
-export type DialogsType = {
+ type DialogsType = {
     id: number
     name: string
 }
-export type PostsType = {
+ type PostsType = {
     id: number
     message: string
     likesCount: number
 }
-export type FriendsType = {
+ type FriendsType = {
     id: number
     name: string
     image: string
 }
-export type ProfilePageType = {
+ type ProfilePageType = {
     posts: Array<PostsType>
     newPostText: string
 }
-export type DialogsPageType = {
+ type DialogsPageType = {
     dialogs: Array<DialogsType>
     messages: Array<MessageType>
     newMessageText: string
 }
-export type FriendsPageType = {
+ type FriendsPageType = {
     friends: Array<FriendsType>
 }
-export type RootStateType = {
+ type RootStateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
     sidebar: FriendsPageType
 }
-export type DispatchType = addPostACType | changePostTextACType | sendNewMessageACType | changeMessageTextACType
+ export type DispatchType = addPostACType | updatePostTextACType | sendNewMessageACType | updateNewMessageACType
 
 
 
 
-export type StoreType = {
+ type StoreType = {
     _state: RootStateType
     _onChange: () => void
     subscriber: (observer: () => void) => void
@@ -49,7 +50,7 @@ export type StoreType = {
     dispatch: (action: DispatchType) => void
 }
 
-export const store: StoreType = {
+ const store: StoreType = {
     _state: {
         profilePage: {
             posts: [
@@ -108,10 +109,10 @@ export const store: StoreType = {
     },
 
     dispatch (action) {
-        this._state.profilePage = profileReducer(this._state.profilePage, action)
-        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
+        /*this._state.profilePage = profileReducer(this._state.profilePage, action)
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)*/
+        this._state.sidebar = sidebarReducer(this._state.sidebar, action)
         this._onChange()
-
     }
 }
 
