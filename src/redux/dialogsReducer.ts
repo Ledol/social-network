@@ -1,4 +1,3 @@
-import {DispatchType} from "./Store";
 
 export type DialogType = {
     id: number
@@ -28,18 +27,17 @@ let initialState = {
     newMessageText: ''
 }
 
+export type DialogsActionType = sendNewMessageACType| updateNewMessageACType
 
-export const dialogsReducer = (state:initialStateType = initialState, action:DispatchType):initialStateType => {
+export const dialogsReducer = (state:initialStateType = initialState, action:DialogsActionType):initialStateType => {
     switch (action.type) {
         case "SEND-MESSAGE" : {
-            let newMessage:MessageType  = {
-                id: new Date().getTime(),
-                message: state.newMessageText,}
+            let newMessage:MessageType  = {id: new Date().getTime(), message: state.newMessageText}
             return {...state, messages: [...state.messages, newMessage], newMessageText: ''}
         }
-        case "CHANGE-MESSAGE-TEXT" : {
+        case "UPDATE-NEW-MESSAGE" : {
             return {...state, newMessageText: action.payload.newMessage}
-        }   // Update body new message
+        }
         default:
             console.log("Dialogs page wasn't changed")
             return state
@@ -53,10 +51,10 @@ export const sendNewMessageAC = () => {
         type: "SEND-MESSAGE",
     }as const
 }
-export type changeMessageTextACType = ReturnType<typeof changeMessageTextAC>
-export const changeMessageTextAC = (newMessage: string) => {
+export type updateNewMessageACType = ReturnType<typeof updateNewMessageAC>
+export const updateNewMessageAC = (newMessage: string) => {
     return {
-        type: "CHANGE-MESSAGE-TEXT",
+        type: "UPDATE-NEW-MESSAGE",
         payload: {newMessage}
     }as const
 }

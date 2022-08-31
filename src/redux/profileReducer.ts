@@ -1,4 +1,3 @@
-import {DispatchType} from "./Store";
 
 export type PostsType = {
     id: number
@@ -15,37 +14,35 @@ let initialState = {
     newPostText: '',
 }
 
-export const profileReducer = (state:initialStateType = initialState, action: DispatchType):initialStateType => {
+export type ProfileActionType = addPostACType| updatePostTextACType
+
+export const profileReducer = (state: initialStateType = initialState, action: ProfileActionType): initialStateType => {
     switch (action.type) {
         case "ADD-POST" : {
-            let newPost: PostsType = {
-                id: new Date().getTime(),
-                message: state.newPostText,
-                likesCount: 0}
-            //state.posts.push(newPost)
+            let newPost: PostsType = {id: new Date().getTime(), message: state.newPostText, likesCount: 0}
             return {...state, posts: [...state.posts, newPost], newPostText: ''}
         }
-        case "CHANGE-POST-TEXT" : {
-           return {...state, newPostText: action.payload.newPost}
-
-        }    // Update new post text
+        case "UPDATE-NEW-POST" : {
+            return {...state, newPostText: action.payload.newPost}
+        }
         default:
             console.log("Profile page wasn't changed")
             return state
     }
 }
 
+
+
 export type addPostACType = ReturnType<typeof addPostAC>
 export const addPostAC = () => {
     return {
         type: "ADD-POST",
-    }as const
+    } as const
 }
-export type changePostTextACType = ReturnType<typeof changePostTextAC>
-export const changePostTextAC = (newPost: string) => {
-
+export type updatePostTextACType = ReturnType<typeof updatePostTextAC>
+export const updatePostTextAC = (newPost: string) => {
     return {
-        type: "CHANGE-POST-TEXT",
+        type: "UPDATE-NEW-POST",
         payload: {newPost}
-    }as const
+    } as const
 }
