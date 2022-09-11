@@ -7,3 +7,9 @@
 .selectedPage {
     font-weight: bold;
 }
+
+.preload {
+    width: 150px;
+    height: 150px;
+    align-items: center;
+}
