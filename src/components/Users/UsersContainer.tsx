@@ -11,8 +11,7 @@ import {
 import React from "react";
 import axios from "axios";
 import {Users} from "./Users";
-import Preloader from "../../assets/images/preloader4.gif"
-import style from "./Users.module.css"
+import {Preloader} from "../common/Preloader/Preloader";
 
 
 class UsersAPIContainer extends React.Component<UsersPropsType> {
@@ -41,7 +40,7 @@ class UsersAPIContainer extends React.Component<UsersPropsType> {
     render() {
 
         return <>
-            {this.props.isFetching ? <div><img className={style.preload} src={Preloader} alt='preloader'/></div> : null}
+            {this.props.isFetching ? <Preloader/> : null}
             <Users totalUserCount={this.props.totalUserCount}
                    pageSize={this.props.pageSize}
                    onPageChanged={this.onPageChanged}
