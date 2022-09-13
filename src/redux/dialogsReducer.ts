@@ -45,14 +45,14 @@ export const dialogsReducer = (state:initialStateType = initialState, action:Dia
     }
 }
 
-export type sendNewMessageACType = ReturnType<typeof sendNewMessageAC>
-export const sendNewMessageAC = () => {
+export type sendNewMessageACType = ReturnType<typeof sendNewMessage>
+export const sendNewMessage = () => {
     return {
         type: "SEND-MESSAGE",
     }as const
 }
-export type updateNewMessageACType = ReturnType<typeof updateNewMessageAC>
-export const updateNewMessageAC = (newMessage: string) => {
+export type updateNewMessageACType = ReturnType<typeof updateNewMessage>
+export const updateNewMessage = (newMessage: string) => {
     return {
         type: "UPDATE-NEW-MESSAGE",
         payload: {newMessage}
