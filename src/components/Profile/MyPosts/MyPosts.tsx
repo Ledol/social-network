@@ -8,8 +8,8 @@ export const MyPosts: FC<MyPostsPropsType> = (
     {
         posts,
         newPostText,
-        updateNewPost,
-        addNewPost,
+        updatePostText,
+        addPost,
     }) => {
 
     let postsElement = posts.map(post => {
@@ -21,10 +21,10 @@ export const MyPosts: FC<MyPostsPropsType> = (
     })
 
     const addPostHandler = () => {
-        addNewPost()
+        addPost()
     }
     const onChangePostHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        updateNewPost(e.currentTarget.value)
+        updatePostText(e.currentTarget.value)
     }
 
     return (

@@ -9,7 +9,7 @@ import {DialogsPropsType} from "./DialogsContainer";
 export const Dialogs: FC<DialogsPropsType> = (
     {
         updateNewMessage,
-        sendMessage,
+        sendNewMessage,
         dialogs,
         message,
         newMessageText,
@@ -20,9 +20,8 @@ export const Dialogs: FC<DialogsPropsType> = (
 
 
     const onSendMessage = () => {
-        sendMessage()
+        sendNewMessage()
     }
-
     const onChangeMessageHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
         updateNewMessage(e.currentTarget.value)
     }
