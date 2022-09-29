@@ -20,7 +20,7 @@ class UsersAPIContainer extends React.Component<UsersPropsType> {
     componentDidMount() {
         this.props.toggleIsFetching(true)
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
-            .then(response => {
+            .then((response) => {
                 this.props.toggleIsFetching(false)
                 this.props.setUsers(response.data.items);
                 this.props.setTotalUsersCount(response.data.totalCount);
@@ -56,7 +56,6 @@ class UsersAPIContainer extends React.Component<UsersPropsType> {
 
 
 type mapStateToPropsType = {
-    //usersPage: initialStateType
     users: Array<UserType>
     pageSize: number
     totalUserCount: number
@@ -78,7 +77,6 @@ export type UsersPropsType = mapStateToPropsType & mapDispatchToPropsType
 
 const mapStateToProps = (state: AppStateType): mapStateToPropsType => {
     return {
-        // usersPage: state.usersPage,
         users: state.usersPage.users,
         pageSize: state.usersPage.pageSize,
         totalUserCount: state.usersPage.totalUserCount,

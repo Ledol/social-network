@@ -38,11 +38,11 @@ type PropsType = RouteComponentProps<PathParamsType> & ProfilePropsType
 type mapStateToPropsType = {
     profile: ProfileType
 }
-type maDispatchToProps = {
+type maDispatchToPropsType = {
     setUserProfile: (profile:ProfileType) => void
 }
 
-export type ProfilePropsType = mapStateToPropsType & maDispatchToProps
+export type ProfilePropsType = mapStateToPropsType & maDispatchToPropsType
 
 let mapStateToProps = (state: AppStateType): mapStateToPropsType => ({
     profile: state.profilePage.profile
