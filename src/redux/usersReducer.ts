@@ -1,3 +1,6 @@
+import {Dispatch} from "redux";
+import {usersAPI} from "../api/api";
+
 export type UserType = {
     id: number
     photos: {
@@ -20,10 +23,11 @@ let initialState = {
     totalUserCount: 0,
     currentPage: 1,
     isFetching: false,
+    followingInProgress: [2,3,4],
 }
 
 export type actionType = followACType | unfollowACType | setUsersACType
-    | setCurrentPageACType | setTotalUsersCountACType | toggleIsFetchingACType
+    | setCurrentPageACType | setTotalUsersCountACType | toggleIsFetchingACType |toggleIsFollowingProgressACType
 
 export const usersReducer = (state: initialStateType = initialState, action: actionType): initialStateType => {
     switch (action.type) {
@@ -45,7 +49,11 @@ export const usersReducer = (state: initialStateType = initialState, action: act
         case 'TOGGLE-IS-FETCHING': {
             return {...state, isFetching: action.payload.isFetching}
         }
-
+        case 'TOGGLE-IS-FOLLOWING-PROGRESS': {
+            return {...state, followingInProgress: action.payload.fetching
+                    ?[...state.followingInProgress, action.payload.userId]
+                    : state.followingInProgress.filter(id => id !== action.payload.userId) }
+        }
         default: {
             return state
         }
@@ -103,4 +111,53 @@ export const toggleIsFetching = (isFetching: boolean) => {
         payload: {isFetching},
     } as const
 
+}
+
+export type toggleIsFollowingProgressACType = ReturnType<typeof toggleIsFollowingProgress>
+export const toggleIsFollowingProgress = (fetching: boolean, userId: number) => {
+    return {
+        type: 'TOGGLE-IS-FOLLOWING-PROGRESS',
+        payload: {fetching, userId},
+    } as const
+
+}
+
+export const getUsersTC = (currentPage: number, pageSize: number) => {
+    return (dispatch: Dispatch) => {
+        dispatch(toggleIsFetching(true))
+
+        usersAPI.getUsers(currentPage, pageSize)
+            .then((data) => {
+                dispatch(toggleIsFetching(false))
+                dispatch(setUsers(data.items));
+                dispatch(setTotalUsersCount(data.totalCount));
+            });}
+}
+
+export const followTC = (userId: number) => {
+    return (dispatch: Dispatch) => {
+        dispatch(toggleIsFollowingProgress(true, userId))
+
+        usersAPI.followUser(userId)
+            .then((response) => {
+                if (response.data.resultCode === 0) {
+                    dispatch(follow(userId))
+                }
+                dispatch(toggleIsFollowingProgress(false, userId))
+            });
+    }
+}
+
+export const unfollowTC = (userId: number) => {
+    return (dispatch: Dispatch) => {
+        dispatch(toggleIsFollowingProgress(true, userId))
+
+        usersAPI.unfollowUser(userId)
+            .then((response) => {
+                if (response.data.resultCode === 0) {
+                    dispatch(unfollow(userId))
+                }
+                dispatch(toggleIsFollowingProgress(false, userId))
+            });
+    }
 }
