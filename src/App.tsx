@@ -10,6 +10,7 @@ import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 import {FriendsContainer} from "./components/Friends/FriendsContainer";
 import {UsersContainer} from "./components/Users/UsersContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
+import {Login} from "./components/Login/Login";
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
             <Navbar/>
             <FriendsContainer/>
             <div className='app-wrapper-content'>
+                <Route path="/login" render={() => <Login/>}/>
                 <Route path="/profile/:userId?" render={() => <ProfileContainer/>}/>
                 <Route path="/dialogs" render={() => <DialogsContainer/>}/>
                 <Route path="/users" render={() => <UsersContainer/>}/>

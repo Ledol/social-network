@@ -3,6 +3,7 @@ import style from './Dialogs.module.css'
 import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
 import {DialogsPropsType} from "./DialogsContainer";
+import {Redirect} from "react-router-dom";
 
 
 
@@ -13,6 +14,7 @@ export const Dialogs: FC<DialogsPropsType> = (
         dialogs,
         message,
         newMessageText,
+        isAuth
     }) => {
 
     let dialogsElement = dialogs.map(dialog => <DialogItem key={dialog.id} id={dialog.id} name={dialog.name}/>)
@@ -26,7 +28,7 @@ export const Dialogs: FC<DialogsPropsType> = (
         updateNewMessage(e.currentTarget.value)
     }
 
-
+    if (!isAuth) return <Redirect to="/login"/>
     return (
         <div className={style.dialogs}>
             <div className={style.dialogsItem}>
