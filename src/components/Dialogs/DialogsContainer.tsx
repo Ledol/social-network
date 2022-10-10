@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ComponentType} from 'react';
 import {
     sendNewMessage,
     updateNewMessage,
@@ -9,6 +9,7 @@ import {Dialogs} from "./Dialogs";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import {compose} from "redux";
 
 
 
@@ -44,4 +45,10 @@ const mapStateToProps = (state: AppStateType):MapStateToPropsType => {
     }
 }*/
 
-export const DialogsContainer = withAuthRedirect(connect (mapStateToProps, {updateNewMessage, sendNewMessage})(Dialogs))
+//export const DialogsContainer = withAuthRedirect(connect (mapStateToProps, {updateNewMessage, sendNewMessage})(Dialogs))
+
+export default compose<ComponentType> (
+    connect (mapStateToProps, {updateNewMessage, sendNewMessage}),
+    withAuthRedirect
+) (Dialogs)
+

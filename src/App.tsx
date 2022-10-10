@@ -6,11 +6,12 @@ import {Route} from "react-router-dom";
 import {Music} from "./components/Music/Music";
 import {News} from "./components/News/News";
 import {Setting} from "./components/Setting/Setting";
-import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 import {FriendsContainer} from "./components/Friends/FriendsContainer";
 import {UsersContainer} from "./components/Users/UsersContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import {Login} from "./components/Login/Login";
+import DialogsContainer from "./components/Dialogs/DialogsContainer";
+
 
 
 function App() {
