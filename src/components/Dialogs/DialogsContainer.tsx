@@ -8,44 +8,15 @@ import {
 import {Dialogs} from "./Dialogs";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 
-/*
-export const DialogsContainer = () => {
-    return <StoreContext.Consumer>
-        {
-            (store) => {
-
-                let state = store.getState().dialogsPage;
-
-                const onSendMessage = () => {
-                    store.dispatch(sendNewMessageAC())
-                }
-
-                const onChangeMessage = (newMessage: string) => {
-                    store.dispatch(changeMessageTextAC(newMessage))
-                }
-
-
-                return <Dialogs updateNewMessage={onChangeMessage}
-                                sendMessage={onSendMessage}
-                                dialogsPage={state}
-                                dialogs={state.dialogs}
-                                messages={state.messages}
-                                newMessageText={state.newMessageText}/>
-            }
-        }
-
-    </StoreContext.Consumer>
-};
-*/
 
 type MapStateToPropsType = {
-   // dialogsPage: initialStateType
     dialogs: Array<DialogType>
     message: Array<MessageType>
     newMessageText: string
-    isAuth: boolean
+
 }
 
 type MapDispatchToPropsType = {
@@ -57,11 +28,9 @@ export type DialogsPropsType = MapStateToPropsType & MapDispatchToPropsType;
 
 const mapStateToProps = (state: AppStateType):MapStateToPropsType => {
    return {
-       //dialogsPage: state.dialogsPage,
        dialogs: state.dialogsPage.dialogs,
        message: state.dialogsPage.messages,
        newMessageText: state.dialogsPage.newMessageText,
-       isAuth: state.auth.isAuth
    }
 }
 /*const mapDispatchToProps = (dispatch: Dispatch):MapDispatchToPropsType => {
@@ -75,4 +44,4 @@ const mapStateToProps = (state: AppStateType):MapStateToPropsType => {
     }
 }*/
 
-export const DialogsContainer = connect (mapStateToProps, {updateNewMessage, sendNewMessage})(Dialogs)
+export const DialogsContainer = withAuthRedirect(connect (mapStateToProps, {updateNewMessage, sendNewMessage})(Dialogs))
