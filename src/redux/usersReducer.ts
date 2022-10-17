@@ -20,10 +20,10 @@ export type initialStateType = typeof initialState;
 let initialState = {
     users: [ ] as Array<UserType>,
     pageSize: 10,
-    totalUserCount: 0,
+    totalUsersCount: 0,
     currentPage: 1,
-    isFetching: false,
-    followingInProgress: [2,3,4],
+    isFetching: true,
+    followingInProgress: [] as Array<number>,
 }
 
 export type actionType = followACType | unfollowACType | setUsersACType
@@ -44,7 +44,7 @@ export const usersReducer = (state: initialStateType = initialState, action: act
             return {...state, currentPage: action.payload.currentPage}
         }
         case 'SET-TOTAL-USER-COUNT': {
-            return {...state, totalUserCount: action.payload.count}
+            return {...state, totalUsersCount: action.payload.count}
         }
         case 'TOGGLE-IS-FETCHING': {
             return {...state, isFetching: action.payload.isFetching}
@@ -148,7 +148,7 @@ export const followTC = (userId: number) => {
     }
 }
 
-export const unfollowTC = (userId: number) => {
+ export const unfollowTC = (userId: number) => {
     return (dispatch: Dispatch) => {
         dispatch(toggleIsFollowingProgress(true, userId))
 

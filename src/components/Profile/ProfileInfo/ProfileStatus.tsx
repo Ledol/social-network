@@ -1,29 +1,33 @@
 import React, {ChangeEvent, useState} from 'react';
 
-export const ProfileStatus = () => {
+type ProfileStatusType = {
+    status:string
+    updateStatus: (status: string) => void
+}
+
+export const ProfileStatus = (props:ProfileStatusType) => {
 
     const [editMode, setEditMode] = useState<boolean>(false)
-    const [changedStatus, setChangedStatus] = useState<string>("First status")
+    const [changedStatus, setChangedStatus] = useState<string>(props.status)
 
-debugger
-    const changeEditMode = () => {
-        setEditMode(!editMode)
-        setChangedStatus(changedStatus)
+    const activateEditMode = () => {
+        setEditMode(true)
+        setChangedStatus(props.status)
     }
 
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) =>{
+    const onStatusChangeHandler = (e: ChangeEvent<HTMLInputElement>) =>{
         setChangedStatus(e.currentTarget.value)
     }
 
-    const onBlurHandler = () => {
-        setEditMode(!editMode)
-        setChangedStatus(changedStatus)
+    const deactivateEditMode = () => {
+        setEditMode(false)
+        props.updateStatus(changedStatus)
     }
 
     return (
         editMode
-            ? <input value={changedStatus} onChange={onChangeHandler} onBlur={onBlurHandler} autoFocus />
-            : <span onDoubleClick={changeEditMode}>{changedStatus}</span>
+            ? <input value={changedStatus} onChange={onStatusChangeHandler} onBlur={deactivateEditMode} autoFocus />
+            : <span onDoubleClick={activateEditMode}>{props.status || 'Empty Status Field'}</span>
     )
 };
 

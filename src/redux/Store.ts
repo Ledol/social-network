@@ -37,7 +37,7 @@ import {sidebarReducer} from "./sidebarReducer";
     dialogsPage: DialogsPageType
     sidebar: FriendsPageType
 }
- export type DispatchType = addPostACType | updatePostTextACType | sendNewMessageACType | updateNewMessageACType
+type DispatchType = addPostACType | updatePostTextACType | sendNewMessageACType | updateNewMessageACType
 
 
 
