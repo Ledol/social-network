@@ -1,3 +1,5 @@
+import {Dispatch} from "redux";
+import {profileAPI} from "../api/api";
 
 export type PostsType = {
     id: number
@@ -31,10 +33,11 @@ let initialState = {
         fullName: '',
         userId: 0,
         photos: {small: '', large: ''},
-    }
+    },
+    status: '' as string
 }
 
-export type ProfileActionType = addPostACType| updatePostTextACType | setUserProfileACType
+export type ProfileActionType = addPostACType| updatePostTextACType | setUserProfileACType |setStatusACType
 
 export const profileReducer = (state: initialStateType = initialState, action: ProfileActionType): initialStateType => {
     switch (action.type) {
@@ -47,6 +50,9 @@ export const profileReducer = (state: initialStateType = initialState, action: P
         }
         case "SET-USER-PROFILE": {
             return {...state, profile: action.payload.profile }
+        }
+        case "SET-STATUS": {
+            return {...state, status: action.payload.status}
         }
         default:
             console.log("Profile page wasn't changed")
@@ -76,3 +82,39 @@ export const setUserProfile = (profile: ProfileType) => {
         payload: {profile}
     } as const
 }
+export type setStatusACType = ReturnType<typeof setStatus>
+export const setStatus = (status: string) => {
+    return {
+        type: "SET-STATUS",
+        payload: {status}
+    } as const
+}
+
+
+export const getProfileTC = (userId: string) => {
+    return (dispatch: Dispatch) => {
+        profileAPI.getProfile(userId)
+            .then(data => {
+                dispatch(setUserProfile(data.data));
+            });
+    }
+}
+export const getUserStatusTC = (userId: string) => {
+    return (dispatch: Dispatch) => {
+        profileAPI.getStatus(userId)
+            .then((res) => {
+                dispatch(setStatus(res.data))
+            })
+    }
+}
+export const updateStatusTC = (status: string) => {
+    return (dispatch: Dispatch) => {
+        profileAPI.updateStatus(status)
+            .then((res) => {
+                if(res.data.resultCode === 0){
+                    dispatch(setStatus(status))
+                }
+            })
+    }
+}
+
