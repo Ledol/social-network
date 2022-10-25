@@ -17,19 +17,18 @@ class UsersAPIContainer extends React.Component<UsersPropsType> {
 
     componentDidMount() {
         this.props.getUsersTC(this.props.currentPage, this.props.pageSize)
+        /*axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {
+            withCredentials: true})*/  // axios request
         /*this.props.toggleIsFetching(true)
-        /!*axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {
-            withCredentials: true})*!/
         usersAPI.getUsers(this.props.currentPage, this.props.pageSize)
             .then((data) => {
                 this.props.toggleIsFetching(false)
                 this.props.setUsers(data.items);
                 this.props.setTotalUsersCount(data.totalCount);
-            });*/
+            });*/  // API request
     }
 
     onPageChanged = (pageNumber: number) => {
-
         this.props.setCurrentPage(pageNumber);
         this.props.getUsersTC(pageNumber, this.props.pageSize)
         /*this.props.toggleIsFetching(true)
@@ -39,14 +38,14 @@ class UsersAPIContainer extends React.Component<UsersPropsType> {
             .then(data => {
                 this.props.toggleIsFetching(false)
                 this.props.setUsers(data.items)
-            });*/
+            });*/  // API request
     }
 
     render() {
 
         return <>
             {this.props.isFetching ? <Preloader/> : null}
-            <Users totalUserCount={this.props.totalUserCount}
+            <Users totalUsersCount={this.props.totalUsersCount}
                    pageSize={this.props.pageSize}
                    onPageChanged={this.onPageChanged}
                    currentPage={this.props.currentPage}
@@ -55,8 +54,6 @@ class UsersAPIContainer extends React.Component<UsersPropsType> {
                    followTC={this.props.followTC}
                    toggleIsFollowingProgress={this.props.toggleIsFollowingProgress}
                    followingInProgress={this.props.followingInProgress}
-
-
             />
         </>
     }
@@ -66,7 +63,7 @@ class UsersAPIContainer extends React.Component<UsersPropsType> {
 type mapStateToPropsType = {
     users: Array<UserType>
     pageSize: number
-    totalUserCount: number
+    totalUsersCount: number
     currentPage: number
     isFetching: boolean
     followingInProgress: Array<number>
@@ -86,9 +83,8 @@ export type UsersPropsType = mapStateToPropsType & mapDispatchToPropsType
 const mapStateToProps = (state: AppStateType): mapStateToPropsType => {
     return {
         users: state.usersPage.users,
-
         pageSize: state.usersPage.pageSize,
-        totalUserCount: state.usersPage.totalUserCount,
+        totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
         isFetching: state.usersPage.isFetching,
         followingInProgress: state.usersPage.followingInProgress,
@@ -116,10 +112,8 @@ const mapStateToProps = (state: AppStateType): mapStateToPropsType => {
             dispatch(toggleIsFetchingAC(isFetching))
         },
     }
-}*/
+}*/  // MapDispatchToProps
 
-export const UsersContainer = connect(
-    mapStateToProps, {
-        followTC, unfollowTC, setCurrentPage,
-        toggleIsFollowingProgress, getUsersTC,
-    })(UsersAPIContainer)
+export const UsersContainer = connect( mapStateToProps,
+    { followTC, unfollowTC, setCurrentPage,toggleIsFollowingProgress, getUsersTC }
+)(UsersAPIContainer)

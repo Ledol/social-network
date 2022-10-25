@@ -6,7 +6,7 @@ import {NavLink} from "react-router-dom";
 
 
 type UsersPropsType = {
-    totalUserCount: number
+    totalUsersCount: number
     pageSize: number
     onPageChanged: (pageNumber: number) => void
     currentPage: number
@@ -20,7 +20,7 @@ type UsersPropsType = {
 
 export const Users: FC<UsersPropsType> = (props) => {
 
-    let pagesCount = Math.ceil(props.totalUserCount / props.pageSize);
+    let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
     let pages = [];
 
     for (let i = 1; i <= pagesCount; i++) {
@@ -63,7 +63,7 @@ export const Users: FC<UsersPropsType> = (props) => {
                                     props.unfollow(u.id)
                                 }
                                 props.toggleIsFollowingProgress(false, u.id)
-                            });*/
+                            });*/ // API request
                     }}>Unfollowed</button>
                     : <button onClick={() => {
                         props.followTC(u.id)
@@ -80,7 +80,7 @@ export const Users: FC<UsersPropsType> = (props) => {
                                     props.follow(u.id)
                                 }
                                 props.toggleIsFollowingProgress(false, u.id)
-                            });*/
+                            });*/  // API request
                     }}>Followed</button>
                 }
                 </div>
