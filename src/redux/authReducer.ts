@@ -2,9 +2,9 @@ import {Dispatch} from "redux";
 import {authAPI} from "../api/api";
 
 export type DataType = {
-    id: null|number
-    login: null|string
-    email: null|string
+    id: null | number
+    login: null | string
+    email: null | string
 }
 export type initialStateType = {
     data: DataType
@@ -17,7 +17,7 @@ let initialState = {
         login: null,
         email: null,
     },
-        isAuth: false
+    isAuth: false
 }
 
 export type actionType = setAuthUserDataType
@@ -52,4 +52,5 @@ export const getAuthTC = () => {
             });
     }
 }
+
 
