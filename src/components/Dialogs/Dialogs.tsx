@@ -38,8 +38,12 @@ export const Dialogs: FC<DialogsPropsType> = (
                 {messagesElement}
             </div>
             <div>
-                <textarea value={newMessageText} onChange={onChangeMessageHandler}></textarea>
-                <button onClick={onSendMessage}>New message</button>
+                <div>
+                    <textarea value={newMessageText} onChange={onChangeMessageHandler}></textarea>
+                </div>
+                <div>
+                    <button onClick={onSendMessage}>New message</button>
+                </div>
             </div>
         </div>
     );
