@@ -24,7 +24,6 @@ let initialState = {
         {id: 1, message: 'Hi, how are you?', likesCount: 15},
         {id: 2, message: 'What\'s, wrong?', likesCount: 25},
     ] as Array<PostsType>,
-    newPostText: '',
     profile: {
         aboutMe: '',
         contacts: {facebook: '', website: '', vk: '',twitter: '',instagram: '',youtube: '',github: '',mainLink: '', },
@@ -37,17 +36,17 @@ let initialState = {
     status: '' as string
 }
 
-export type ProfileActionType = addPostACType| updatePostTextACType | setUserProfileACType |setStatusACType
+export type ProfileActionType = addPostACType|setUserProfileACType |setStatusACType
 
 export const profileReducer = (state: initialStateType = initialState, action: ProfileActionType): initialStateType => {
     switch (action.type) {
         case "ADD-POST" : {
-            let newPost: PostsType = {id: new Date().getTime(), message: state.newPostText, likesCount: 0}
-            return {...state, posts: [...state.posts, newPost], newPostText: ''}
+            let newPost: PostsType = {id: new Date().getTime(), message: action.newPost, likesCount: 0}
+            return {...state, posts: [newPost, ...state.posts]}
         }
-        case "UPDATE-NEW-POST" : {
+        /*case "UPDATE-NEW-POST" : {
             return {...state, newPostText: action.payload.newPost}
-        }
+        }*/
         case "SET-USER-PROFILE": {
             return {...state, profile: action.payload.profile }
         }
@@ -61,20 +60,21 @@ export const profileReducer = (state: initialStateType = initialState, action: P
 }
 
 
-
+//ACTION
 export type addPostACType = ReturnType<typeof addPost>
-export const addPost = () => {
+export const addPost = (newPost: string) => {
     return {
         type: "ADD-POST",
+        newPost
     } as const
 }
-export type updatePostTextACType = ReturnType<typeof updatePostText>
+/*export type updatePostTextACType = ReturnType<typeof updatePostText>
 export const updatePostText = (newPost: string) => {
     return {
         type: "UPDATE-NEW-POST",
         payload: {newPost}
     } as const
-}
+}*/
 export type setUserProfileACType = ReturnType<typeof setUserProfile>
 export const setUserProfile = (profile: ProfileType) => {
     return {
@@ -90,7 +90,7 @@ export const setStatus = (status: string) => {
     } as const
 }
 
-
+//THUNK
 export const getProfileTC = (userId: string) => {
     return (dispatch: Dispatch) => {
         profileAPI.getProfile(userId)

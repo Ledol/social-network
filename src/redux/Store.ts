@@ -1,4 +1,4 @@
-import {addPostACType, updatePostTextACType, profileReducer} from "./profileReducer";
+import {addPostACType, profileReducer} from "./profileReducer";
 import {dialogsReducer, sendNewMessageACType} from "./dialogsReducer";
 import {sidebarReducer} from "./sidebarReducer";
 
@@ -37,7 +37,7 @@ type RootStateType = {
     dialogsPage: DialogsPageType
     sidebar: FriendsPageType
 }
-type DispatchType = addPostACType | updatePostTextACType | sendNewMessageACType
+type DispatchType = addPostACType |  sendNewMessageACType
 
 
 type StoreType = {

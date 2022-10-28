@@ -1,14 +1,13 @@
-import React, {ChangeEvent, FC} from 'react';
+import React, {FC} from 'react';
 import {Post} from "./Post/Post";
 import style from './MyPosts.module.css'
 import {MyPostsPropsType} from "./MyPostsContainer";
+import {AddPostFormRedux, PostFormType} from "./AddPostForm";
 
 
 export const MyPosts: FC<MyPostsPropsType> = (
     {
         posts,
-        newPostText,
-        updatePostText,
         addPost,
     }) => {
 
@@ -20,20 +19,26 @@ export const MyPosts: FC<MyPostsPropsType> = (
         />
     })
 
-    const addPostHandler = () => {
+    /*const addPostHandler = () => {
         addPost()
     }
     const onChangePostHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
         updatePostText(e.currentTarget.value)
+    }*/
+    const addNewPost = (values: PostFormType) => {
+        addPost(values.newPost)
     }
 
     return (
         <div className={style.content}>
             <h3> My Posts</h3>
             <div>
-                <textarea value={newPostText} onChange={onChangePostHandler}></textarea>
-                <button onClick={addPostHandler}>Add Post</button>
-                {postsElement}
+                <AddPostFormRedux onSubmit={addNewPost}/>
+                {/*<textarea value={newPostText} onChange={onChangePostHandler}></textarea>
+                <button onClick={addPostHandler}>Add Post</button>*/}
+                <div className={style.posts}>
+                    {postsElement}
+                </div>
             </div>
         </div>
     );
