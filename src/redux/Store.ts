@@ -1,48 +1,46 @@
 import {addPostACType, updatePostTextACType, profileReducer} from "./profileReducer";
-import {updateNewMessageACType, dialogsReducer, sendNewMessageACType} from "./dialogsReducer";
+import {dialogsReducer, sendNewMessageACType} from "./dialogsReducer";
 import {sidebarReducer} from "./sidebarReducer";
 
- type MessageType = {
+type MessageType = {
     id: number
     message: string
 }
- type DialogsType = {
+type DialogsType = {
     id: number
     name: string
 }
- type PostsType = {
+type PostsType = {
     id: number
     message: string
     likesCount: number
 }
- type FriendsType = {
+type FriendsType = {
     id: number
     name: string
     image: string
 }
- type ProfilePageType = {
+type ProfilePageType = {
     posts: Array<PostsType>
     newPostText: string
 }
- type DialogsPageType = {
+type DialogsPageType = {
     dialogs: Array<DialogsType>
     messages: Array<MessageType>
     newMessageText: string
 }
- type FriendsPageType = {
+type FriendsPageType = {
     friends: Array<FriendsType>
 }
- type RootStateType = {
+type RootStateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
     sidebar: FriendsPageType
 }
-type DispatchType = addPostACType | updatePostTextACType | sendNewMessageACType | updateNewMessageACType
+type DispatchType = addPostACType | updatePostTextACType | sendNewMessageACType
 
 
-
-
- type StoreType = {
+type StoreType = {
     _state: RootStateType
     _onChange: () => void
     subscriber: (observer: () => void) => void
@@ -50,7 +48,7 @@ type DispatchType = addPostACType | updatePostTextACType | sendNewMessageACType 
     dispatch: (action: DispatchType) => void
 }
 
- const store: StoreType = {
+const store: StoreType = {
     _state: {
         profilePage: {
             posts: [
@@ -97,18 +95,18 @@ type DispatchType = addPostACType | updatePostTextACType | sendNewMessageACType 
             ]
         }
     },
-    _onChange () {
+    _onChange() {
         console.log('state was change')
     },
 
-    subscriber (observer) {
+    subscriber(observer) {
         this._onChange = observer
     },
-    getState () {
+    getState() {
         return this._state
     },
 
-    dispatch (action) {
+    dispatch(action) {
         /*this._state.profilePage = profileReducer(this._state.profilePage, action)
         this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)*/
         this._state.sidebar = sidebarReducer(this._state.sidebar, action)
