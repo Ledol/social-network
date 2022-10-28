@@ -1,19 +1,16 @@
-import React, {ChangeEvent, FC} from 'react';
+import React, {FC} from 'react';
 import style from './Dialogs.module.css'
 import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
 import {DialogsPropsType} from "./DialogsContainer";
-
-
+import {AddMessageFormRedux, FormDataType} from "./AddMessageForm";
 
 
 export const Dialogs: FC<DialogsPropsType> = (
     {
-        updateNewMessage,
         sendNewMessage,
         dialogs,
-        message,
-        newMessageText,
+        message
 
     }) => {
 
@@ -21,11 +18,8 @@ export const Dialogs: FC<DialogsPropsType> = (
     let messagesElement = message.map(m => <Message key={m.id} id={m.id} message={m.message}/>)
 
 
-    const onSendMessage = () => {
-        sendNewMessage()
-    }
-    const onChangeMessageHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        updateNewMessage(e.currentTarget.value)
+    const onSubmitHandler = (formData: FormDataType) => {
+        sendNewMessage(formData.newMessage)
     }
 
 
@@ -37,14 +31,7 @@ export const Dialogs: FC<DialogsPropsType> = (
             <div className={style.messages}>
                 {messagesElement}
             </div>
-            <div>
-                <div>
-                    <textarea value={newMessageText} onChange={onChangeMessageHandler}></textarea>
-                </div>
-                <div>
-                    <button onClick={onSendMessage}>New message</button>
-                </div>
-            </div>
+            <AddMessageFormRedux onSubmit={onSubmitHandler}/>
         </div>
     );
 };

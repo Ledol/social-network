@@ -23,21 +23,20 @@ let initialState = {
         {id: 3, message: 'Have a good day!'},
         {id: 4, message: 'Wake up!'},
         {id: 5, message: 'Dear, what\'s wrong?'},
-    ] as Array<MessageType>,
-    newMessageText: ''
+    ] as Array<MessageType>
 }
 
-export type DialogsActionType = sendNewMessageACType| updateNewMessageACType
+export type DialogsActionType = sendNewMessageACType
 
 export const dialogsReducer = (state:initialStateType = initialState, action:DialogsActionType):initialStateType => {
     switch (action.type) {
         case "SEND-MESSAGE" : {
-            let newMessage:MessageType  = {id: new Date().getTime(), message: state.newMessageText}
-            return {...state, messages: [...state.messages, newMessage], newMessageText: ''}
+            let newMessage:MessageType  = {id: new Date().getTime(), message: action.newMessage}
+            return {...state, messages: [...state.messages, newMessage]}
         }
-        case "UPDATE-NEW-MESSAGE" : {
+       /* case "UPDATE-NEW-MESSAGE" : {
             return {...state, newMessageText: action.payload.newMessage}
-        }
+        }*/
         default:
             console.log("Dialogs page wasn't changed")
             return state
@@ -46,15 +45,17 @@ export const dialogsReducer = (state:initialStateType = initialState, action:Dia
 }
 
 export type sendNewMessageACType = ReturnType<typeof sendNewMessage>
-export const sendNewMessage = () => {
+export const sendNewMessage = (newMessage: string) => {
     return {
         type: "SEND-MESSAGE",
+        newMessage
     }as const
 }
+/*
 export type updateNewMessageACType = ReturnType<typeof updateNewMessage>
 export const updateNewMessage = (newMessage: string) => {
     return {
         type: "UPDATE-NEW-MESSAGE",
         payload: {newMessage}
     }as const
-}
+}*/
