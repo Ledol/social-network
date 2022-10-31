@@ -69,6 +69,7 @@ export const follow = (userID: number) => {
     } as const
 }
 
+//ACTIONS
 export type unfollowACType = ReturnType<typeof unfollow>
 export const unfollow = (userID: number) => {
     return {
@@ -122,6 +123,7 @@ export const toggleIsFollowingProgress = (fetching: boolean, userId: number) => 
 
 }
 
+//THUNKS
 export const getUsersTC = (currentPage: number, pageSize: number) => {
     return (dispatch: Dispatch) => {
         dispatch(toggleIsFetching(true))
