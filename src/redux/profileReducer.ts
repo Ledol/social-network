@@ -1,5 +1,6 @@
 import {Dispatch} from "redux";
 import {profileAPI} from "../api/api";
+import {AppStateType} from "./redux-store";
 
 export type PostsType = {
     id: number
@@ -92,7 +93,10 @@ export const setStatus = (status: string) => {
 
 //THUNK
 export const getProfileTC = (userId: string) => {
-    return (dispatch: Dispatch) => {
+    return (dispatch: Dispatch, getState: ()=>AppStateType) => {
+        if (!userId) {
+           userId = JSON.stringify(getState().auth.data.id)
+        }
         profileAPI.getProfile(userId)
             .then(data => {
                 dispatch(setUserProfile(data.data));
@@ -100,7 +104,10 @@ export const getProfileTC = (userId: string) => {
     }
 }
 export const getUserStatusTC = (userId: string) => {
-    return (dispatch: Dispatch) => {
+    return (dispatch: Dispatch, getState: ()=>AppStateType) => {
+        if (!userId) {
+            userId = JSON.stringify(getState().auth.data.id)
+        }
         profileAPI.getStatus(userId)
             .then((res) => {
                 dispatch(setStatus(res.data))

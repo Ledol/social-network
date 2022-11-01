@@ -12,9 +12,10 @@ export class ProfileContainer extends React.Component<PropsType> {
 
     componentDidMount() {
         let userId = this.props.match.params.userId;
-        if (!userId) {
-            userId = '25503'
-        }
+         // if (!userId) {
+         //
+         //     userId = JSON.stringify(this.props.authorizedUserId)
+         // }
         /*axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId)*/
         /*profileAPI.getProfile(userId)
             .then(data => {
@@ -46,6 +47,8 @@ type PropsType = RouteComponentProps<PathParamsType> & ProfilePropsType
 type mapStateToPropsType = {
     profile: ProfileType
     status: string
+    authorizedUserId: null | number
+    isAuth: boolean
 
 }
 type maDispatchToPropsType = {
@@ -58,8 +61,9 @@ export type ProfilePropsType = mapStateToPropsType & maDispatchToPropsType
 
 let mapStateToProps = (state: AppStateType): mapStateToPropsType => ({
     profile: state.profilePage.profile,
-    status: state.profilePage.status
-
+    status: state.profilePage.status,
+    authorizedUserId: state.auth.data.id,
+    isAuth: state.auth.isAuth
 })
 
 
