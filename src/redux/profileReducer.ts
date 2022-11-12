@@ -2,33 +2,6 @@ import { Dispatch } from "redux";
 import { profileAPI } from "../api/api";
 import { AppStateType } from "./redux-store";
 
-export type PostsType = {
-  id: number;
-  message: string;
-  likesCount: number;
-};
-
-export type ProfileType = {
-  aboutMe: string;
-  contacts: {
-    facebook: string;
-    website: string;
-    vk: string;
-    twitter: string;
-    instagram: string;
-    youtube: string;
-    github: string;
-    mainLink: string;
-  };
-  lookingForAJob: boolean;
-  lookingForAJobDescription: string;
-  fullName: string;
-  userId: number;
-  photos: { small: string; large: string };
-};
-
-export type initialStateType = typeof initialState;
-
 let initialState = {
   posts: [
     { id: 1, message: "Hi, how are you?", likesCount: 15 },
@@ -55,10 +28,6 @@ let initialState = {
   status: "" as string,
 };
 
-export type ProfileActionType =
-  | addPostACType
-  | setUserProfileACType
-  | setStatusACType;
 
 export const profileReducer = (
   state: initialStateType = initialState,
@@ -73,9 +42,11 @@ export const profileReducer = (
       };
       return { ...state, posts: [newPost, ...state.posts] };
     }
-    /*case "UPDATE-NEW-POST" : {
-            return {...state, newPostText: action.payload.newPost}
-        }*/
+    case "REMOVE-POST":
+      return {...state, posts: state.posts.filter(p => p.id !== action.postId)}
+      /*case "UPDATE-NEW-POST" : {
+              return {...state, newPostText: action.payload.newPost}
+          }*/
     case "SET-USER-PROFILE": {
       return { ...state, profile: action.payload.profile };
     }
@@ -87,14 +58,20 @@ export const profileReducer = (
   }
 };
 
-//ACTION
-export type addPostACType = ReturnType<typeof addPost>;
+//Actions
+
 export const addPost = (newPost: string) => {
   return {
     type: "ADD-POST",
     newPost,
   } as const;
 };
+export const removePost = (postId: number) => {
+  return{
+    type: "REMOVE-POST",
+    postId
+  }as const
+}
 /*export type updatePostTextACType = ReturnType<typeof updatePostText>
 export const updatePostText = (newPost: string) => {
     return {
@@ -102,14 +79,12 @@ export const updatePostText = (newPost: string) => {
         payload: {newPost}
     } as const
 }*/
-export type setUserProfileACType = ReturnType<typeof setUserProfile>;
 export const setUserProfile = (profile: ProfileType) => {
   return {
     type: "SET-USER-PROFILE",
     payload: { profile },
   } as const;
 };
-export type setStatusACType = ReturnType<typeof setStatus>;
 export const setStatus = (status: string) => {
   return {
     type: "SET-STATUS",
@@ -117,7 +92,7 @@ export const setStatus = (status: string) => {
   } as const;
 };
 
-//THUNK
+//Thunks
 export const getProfileTC = (userId: string) => {
   return (dispatch: Dispatch, getState: () => AppStateType) => {
     if (!userId) {
@@ -147,3 +122,39 @@ export const updateStatusTC = (status: string) => {
     });
   };
 };
+
+// Types
+export type PostsType = {
+  id: number;
+  message: string;
+  likesCount: number;
+};
+export type ProfileType = {
+  aboutMe: string;
+  contacts: {
+    facebook: string;
+    website: string;
+    vk: string;
+    twitter: string;
+    instagram: string;
+    youtube: string;
+    github: string;
+    mainLink: string;
+  };
+  lookingForAJob: boolean;
+  lookingForAJobDescription: string;
+  fullName: string;
+  userId: number;
+  photos: { small: string; large: string };
+};
+export type initialStateType = typeof initialState;
+
+export type addPostACType = ReturnType<typeof addPost>;
+export type removePostType = ReturnType<typeof removePost>
+export type setUserProfileACType = ReturnType<typeof setUserProfile>;
+export type setStatusACType = ReturnType<typeof setStatus>;
+export type ProfileActionType =
+    | addPostACType
+    | setUserProfileACType
+    | setStatusACType
+    |removePostType;
