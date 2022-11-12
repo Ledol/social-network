@@ -1,7 +1,5 @@
-
 .content {
-    background-color: #ECE5C7;
-    grid-area: content;
-    padding: 10px;
-
+  background-color: #ece5c7;
+  grid-area: content;
+  padding: 10px;
 }

@@ -1,10 +1,8 @@
-import React from 'react';
-import {addPost, PostsType} from "../../../redux/profileReducer";
-import {MyPosts} from "./MyPosts";
-import {connect} from "react-redux";
-import {AppStateType} from "../../../redux/redux-store";
-
-
+import React from "react";
+import { addPost, PostsType } from "../../../redux/profileReducer";
+import { MyPosts } from "./MyPosts";
+import { connect } from "react-redux";
+import { AppStateType } from "../../../redux/redux-store";
 
 /*export const MyPostsContainer = () => {
 
@@ -36,20 +34,19 @@ import {AppStateType} from "../../../redux/redux-store";
 };*/
 
 type mapStateToPropsType = {
-    posts: Array<PostsType>,
-}
+  posts: Array<PostsType>;
+};
 type mapDispatchToPropsType = {
-    addPost: (newPost: string) => void
-}
+  addPost: (newPost: string) => void;
+};
 
-export type MyPostsPropsType = mapStateToPropsType & mapDispatchToPropsType
+export type MyPostsPropsType = mapStateToPropsType & mapDispatchToPropsType;
 
-
-const mapStateToProps = (state:AppStateType):mapStateToPropsType => {
-    return {
-        posts: state.profilePage.posts,
-    }
-}
+const mapStateToProps = (state: AppStateType): mapStateToPropsType => {
+  return {
+    posts: state.profilePage.posts,
+  };
+};
 
 /*const mapDispatchToProps = (dispatch: Dispatch):mapDispatchToPropsType => {
     return {
@@ -62,4 +59,4 @@ const mapStateToProps = (state:AppStateType):mapStateToPropsType => {
     }
 }*/
 
-export const MyPostsContainer = connect (mapStateToProps, { addPost}) (MyPosts)
+export const MyPostsContainer = connect(mapStateToProps, { addPost })(MyPosts);

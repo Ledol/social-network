@@ -1,23 +1,21 @@
 .app-wrapper {
   margin: 0 auto;
   display: grid;
-  width: 1200px ;
+  width: 1200px;
   grid-template-areas:
-            'header header header'
-            'nav content content'
-            'friend content content'                    ;
+    "header header header"
+    "nav content content"
+    "friend content content";
   grid-template-rows: 60px 1fr;
   grid-template-columns: 2fr 10fr;
   grid-gap: 10px;
 }
 
 .app-wrapper-content {
-  background-color: #ECE5C7;
+  background-color: #ece5c7;
   grid-area: content;
-
 }
 .contentIMG {
   width: 1000px;
   height: 200px;
-
 }

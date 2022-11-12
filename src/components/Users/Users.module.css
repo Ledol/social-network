@@ -1,14 +1,14 @@
 .photo {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
 }
 
 .selectedPage {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .preload {
-    width: 150px;
-    height: 150px;
+  width: 150px;
+  height: 150px;
 }

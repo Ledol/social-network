@@ -1,14 +1,13 @@
 .item a {
-    color: #ECE5C7;
-    text-decoration: none;
+  color: #ece5c7;
+  text-decoration: none;
 }
 .item a.activeLink {
-    color: black;
+  color: black;
 }
 
 .imgUser {
-    margin-top: 10px;
-    width: 40px;
-    border-radius: 20px;
+  margin-top: 10px;
+  width: 40px;
+  border-radius: 20px;
 }
-
