@@ -8,7 +8,7 @@ import {
   unfollowTC,
   UserType,
 } from "../../redux/usersReducer";
-import React from "react";
+import React, {ComponentType} from "react";
 import { Users } from "./Users";
 import { Preloader } from "../common/Preloader/Preloader";
 import {
@@ -19,6 +19,8 @@ import {
   getTotalUsersCount,
   getUsers,
 } from "../../redux/users-selectors";
+import {compose} from "redux";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 class UsersAPIContainer extends React.Component<UsersPropsType> {
   componentDidMount() {
@@ -131,10 +133,21 @@ const mapStateToProps = (state: AppStateType): mapStateToPropsType => {
     }
 }*/ // MapDispatchToProps
 
-export const UsersContainer = connect(mapStateToProps, {
+/*export const UsersContainer = connect(mapStateToProps, {
   followTC,
   unfollowTC,
   setCurrentPage,
   toggleIsFollowingProgress,
   getUsersTC,
-})(UsersAPIContainer);
+})(UsersAPIContainer);*/
+
+export const UsersContainer = compose<ComponentType>(
+    connect(mapStateToProps, {
+      followTC,
+      unfollowTC,
+      setCurrentPage,
+      toggleIsFollowingProgress,
+      getUsersTC,
+    }),
+    withAuthRedirect
+)(UsersAPIContainer)
