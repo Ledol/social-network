@@ -7,7 +7,7 @@ export type MessageType = {
   message: string;
 };
 
-export type initialStateType = typeof initialState;
+
 let initialState = {
   dialogs: [
     { id: 1, name: "Dima" },
@@ -25,14 +25,13 @@ let initialState = {
   ] as Array<MessageType>,
 };
 
-export type DialogsActionType = sendNewMessageACType;
 
 export const dialogsReducer = (
   state: initialStateType = initialState,
   action: DialogsActionType
 ): initialStateType => {
   switch (action.type) {
-    case "SEND-MESSAGE": {
+    case "DIALOGS/SEND-MESSAGE": {
       let newMessage: MessageType = {
         id: new Date().getTime(),
         message: action.newMessage,
@@ -47,10 +46,10 @@ export const dialogsReducer = (
   }
 };
 
-export type sendNewMessageACType = ReturnType<typeof sendNewMessage>;
+//ACTION
 export const sendNewMessage = (newMessage: string) => {
   return {
-    type: "SEND-MESSAGE",
+    type: "DIALOGS/SEND-MESSAGE",
     newMessage,
   } as const;
 };
@@ -62,3 +61,12 @@ export const updateNewMessage = (newMessage: string) => {
         payload: {newMessage}
     }as const
 }*/
+
+//THUNK
+
+
+// Types
+export type initialStateType = typeof initialState;
+
+export type sendNewMessageACType = ReturnType<typeof sendNewMessage>;
+export type DialogsActionType = sendNewMessageACType;

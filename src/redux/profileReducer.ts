@@ -34,7 +34,7 @@ export const profileReducer = (
   action: ProfileActionType
 ): initialStateType => {
   switch (action.type) {
-    case "ADD-POST": {
+    case "PROFILE/ADD-POST": {
       let newPost: PostsType = {
         id: new Date().getTime(),
         message: action.newPost,
@@ -42,15 +42,15 @@ export const profileReducer = (
       };
       return { ...state, posts: [newPost, ...state.posts] };
     }
-    case "REMOVE-POST":
+    case "PROFILE/REMOVE-POST":
       return {...state, posts: state.posts.filter(p => p.id !== action.postId)}
       /*case "UPDATE-NEW-POST" : {
               return {...state, newPostText: action.payload.newPost}
           }*/
-    case "SET-USER-PROFILE": {
+    case "PROFILE/SET-USER-PROFILE": {
       return { ...state, profile: action.payload.profile };
     }
-    case "SET-STATUS": {
+    case "PROFILE/SET-STATUS": {
       return { ...state, status: action.payload.status };
     }
     default:
@@ -58,17 +58,16 @@ export const profileReducer = (
   }
 };
 
-//Actions
-
+//ACTIONS
 export const addPost = (newPost: string) => {
   return {
-    type: "ADD-POST",
+    type: "PROFILE/ADD-POST",
     newPost,
   } as const;
 };
 export const removePost = (postId: number) => {
   return{
-    type: "REMOVE-POST",
+    type: "PROFILE/REMOVE-POST",
     postId
   }as const
 }
@@ -81,45 +80,44 @@ export const updatePostText = (newPost: string) => {
 }*/
 export const setUserProfile = (profile: ProfileType) => {
   return {
-    type: "SET-USER-PROFILE",
+    type: "PROFILE/SET-USER-PROFILE",
     payload: { profile },
   } as const;
 };
 export const setStatus = (status: string) => {
   return {
-    type: "SET-STATUS",
+    type: "PROFILE/SET-STATUS",
     payload: { status },
   } as const;
 };
 
-//Thunks
+//THUNKS
 export const getProfileTC = (userId: string) => {
-  return (dispatch: Dispatch, getState: () => AppStateType) => {
+  return async (dispatch: Dispatch, getState: () => AppStateType) => {
     if (!userId) {
       userId = JSON.stringify(getState().auth.data.id);
     }
-    profileAPI.getProfile(userId).then((data) => {
+    let data = await profileAPI.getProfile(userId)
+
       dispatch(setUserProfile(data.data));
-    });
   };
 };
 export const getUserStatusTC = (userId: string) => {
-  return (dispatch: Dispatch, getState: () => AppStateType) => {
+  return async (dispatch: Dispatch, getState: () => AppStateType) => {
     if (!userId) {
       userId = JSON.stringify(getState().auth.data.id);
     }
-    profileAPI.getStatus(userId).then((res) => {
-      dispatch(setStatus(res.data));
-    });
+    let response = await profileAPI.getStatus(userId)
+
+      dispatch(setStatus(response.data));
   };
 };
 export const updateStatusTC = (status: string) => {
-  return (dispatch: Dispatch) => {
-    profileAPI.updateStatus(status).then((res) => {
-      if (res.data.resultCode === 0) {
+  return async (dispatch: Dispatch) => {
+    let response = await profileAPI.updateStatus(status)
+      if (response.data.resultCode === 0) {
         dispatch(setStatus(status));
       }
-    });
   };
 };
 

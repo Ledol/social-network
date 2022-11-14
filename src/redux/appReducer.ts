@@ -1,9 +1,9 @@
 import { getAuthTC } from "./authReducer";
 import { AppThunk } from "./redux-store";
 
-type ActionsType = InitializedSuccessACType;
 
-type InitialStateType = typeof initialState;
+
+
 const initialState = {
   initialized: false,
 };
@@ -13,7 +13,7 @@ export const appReducer = (
   action: ActionsType
 ) => {
   switch (action.type) {
-    case "INITIALIZED-SUCCESS":
+    case "APP/INITIALIZED-SUCCESS":
       return { ...state, initialized: true };
     default: {
       return state;
@@ -22,20 +22,22 @@ export const appReducer = (
 };
 
 // ACTIONS
-
-export type InitializedSuccessACType = ReturnType<typeof initializedSuccessAC>;
 export const initializedSuccessAC = () => {
   return {
-    type: "INITIALIZED-SUCCESS",
+    type: "APP/INITIALIZED-SUCCESS",
   } as const;
 };
 
 //THUNKS
-
-export const initializeAppTC = (): AppThunk => (dispatch) => {
+export const initializeAppTC = (): AppThunk => async (dispatch) => {
   let promise = dispatch(getAuthTC());
 
-  Promise.all([promise]).then(() => {
+  await Promise.all([promise])
     dispatch(initializedSuccessAC());
-  });
 };
+
+// Types
+type InitialStateType = typeof initialState;
+
+export type InitializedSuccessACType = ReturnType<typeof initializedSuccessAC>;
+type ActionsType = InitializedSuccessACType;
