@@ -24,7 +24,7 @@ export const ProfileStatus = (props: ProfileStatusType) => {
   const deactivateEditMode = useCallback(() => {
     setEditMode(false);
     props.updateStatus(changedStatus);
-  }, [props.updateStatus]);
+  }, [props.updateStatus, changedStatus]);
 
   return editMode ? (
     <input
