@@ -1,8 +1,7 @@
-import React, { FC } from "react";
-import style from "./Users.module.css";
-import userPhoto from "../../assets/images/user.png";
-import { UserType } from "../../redux/usersReducer";
-import { NavLink } from "react-router-dom";
+import React, {FC} from "react";
+import {UserType} from "../../redux/usersReducer";
+import {Paginator} from "../common/Paginator/Paginator";
+import {User} from "./User";
 
 type UsersPropsType = {
   totalUsersCount: number;
@@ -17,16 +16,20 @@ type UsersPropsType = {
 };
 
 export const Users: FC<UsersPropsType> = (props) => {
-  let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
+  /*let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
   let pages = [];
 
   for (let i = 1; i <= pagesCount; i++) {
     pages.push(i);
-  }
+  }*/
 
   return (
     <div>
-      <div>
+      <Paginator totalUsersCount={props.totalUsersCount}
+                 pageSize={props.pageSize}
+                 currentPage={props.currentPage}
+                 onPageChanged={props.onPageChanged}/>
+      {/*<div>
         {pages.map((page, index) => {
           return (
             <span
@@ -38,10 +41,16 @@ export const Users: FC<UsersPropsType> = (props) => {
             </span>
           );
         })}
-      </div>
+      </div>*/}
       {props.users.map((u) => {
         return (
-          <div key={u.id}>
+            <User  followTC={props.followTC}
+                   unfollowTC={props.unfollowTC}
+                   key={u.id}
+                   followingInProgress={props.followingInProgress}
+                   user={u}
+            />
+         /* <div key={u.id}>
             <span>
               <div>
                 <NavLink to={"/profile/" + u.id}>
@@ -60,7 +69,7 @@ export const Users: FC<UsersPropsType> = (props) => {
                     )}
                     onClick={() => {
                       props.unfollowTC(u.id);
-                      /*props.toggleIsFollowingProgress(true, u.id)
+                      /!*props.toggleIsFollowingProgress(true, u.id)
                         /!*axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {
                             withCredentials: true,
                             headers: {
@@ -73,7 +82,7 @@ export const Users: FC<UsersPropsType> = (props) => {
                                     props.unfollow(u.id)
                                 }
                                 props.toggleIsFollowingProgress(false, u.id)
-                            });*/ // API request
+                            });*!/ // API request
                     }}
                   >
                     Unfollowed
@@ -82,7 +91,7 @@ export const Users: FC<UsersPropsType> = (props) => {
                   <button
                     onClick={() => {
                       props.followTC(u.id);
-                      /*props.toggleIsFollowingProgress(true, u.id)
+                      /!*props.toggleIsFollowingProgress(true, u.id)
                         /!*axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {}, {
                             withCredentials: true,
                             headers: {
@@ -95,7 +104,7 @@ export const Users: FC<UsersPropsType> = (props) => {
                                     props.follow(u.id)
                                 }
                                 props.toggleIsFollowingProgress(false, u.id)
-                            });*/ // API request
+                            });*!/ // API request
                     }}
                   >
                     Followed
@@ -111,7 +120,7 @@ export const Users: FC<UsersPropsType> = (props) => {
               <div>{"u.location.country"}</div>
               <div>{"u.location.city"}</div>
             </span>
-          </div>
+          </div>*/
         );
       })}
     </div>

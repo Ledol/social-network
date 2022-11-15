@@ -24,7 +24,9 @@ import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 class UsersAPIContainer extends React.Component<UsersPropsType> {
   componentDidMount() {
-    this.props.getUsersTC(this.props.currentPage, this.props.pageSize);
+    const {currentPage, pageSize} = this.props
+
+    this.props.getUsersTC(currentPage, pageSize);
     /*axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {
             withCredentials: true})*/ // axios request
     /*this.props.toggleIsFetching(true)
@@ -37,8 +39,10 @@ class UsersAPIContainer extends React.Component<UsersPropsType> {
   }
 
   onPageChanged = (pageNumber: number) => {
+    const {pageSize} = this.props
+
     this.props.setCurrentPage(pageNumber);
-    this.props.getUsersTC(pageNumber, this.props.pageSize);
+    this.props.getUsersTC(pageNumber, pageSize);
     /*this.props.toggleIsFetching(true)
         /!*axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`, {
             withCredentials: true})*!/
@@ -68,25 +72,6 @@ class UsersAPIContainer extends React.Component<UsersPropsType> {
     );
   }
 }
-
-type mapStateToPropsType = {
-  users: Array<UserType>;
-  pageSize: number;
-  totalUsersCount: number;
-  currentPage: number;
-  isFetching: boolean;
-  followingInProgress: Array<number>;
-};
-
-type mapDispatchToPropsType = {
-  followTC: (userID: number) => void;
-  unfollowTC: (userID: number) => void;
-  setCurrentPage: (currentPage: number) => void;
-  toggleIsFollowingProgress: (fetching: boolean, userId: number) => void;
-  getUsersTC: (currentPage: number, pageSize: number) => void;
-};
-
-export type UsersPropsType = mapStateToPropsType & mapDispatchToPropsType;
 
 const mapStateToProps = (state: AppStateType): mapStateToPropsType => {
   return {
@@ -140,6 +125,25 @@ const mapStateToProps = (state: AppStateType): mapStateToPropsType => {
   toggleIsFollowingProgress,
   getUsersTC,
 })(UsersAPIContainer);*/
+
+// Types
+type mapStateToPropsType = {
+  users: Array<UserType>;
+  pageSize: number;
+  totalUsersCount: number;
+  currentPage: number;
+  isFetching: boolean;
+  followingInProgress: Array<number>;
+};
+type mapDispatchToPropsType = {
+  followTC: (userID: number) => void;
+  unfollowTC: (userID: number) => void;
+  setCurrentPage: (currentPage: number) => void;
+  toggleIsFollowingProgress: (fetching: boolean, userId: number) => void;
+  getUsersTC: (currentPage: number, pageSize: number) => void;
+};
+
+export type UsersPropsType = mapStateToPropsType & mapDispatchToPropsType;
 
 export const UsersContainer = compose<ComponentType>(
     connect(mapStateToProps, {

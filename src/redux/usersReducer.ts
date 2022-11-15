@@ -120,7 +120,7 @@ export const getUsersTC = (currentPage: number, pageSize: number) => {
       dispatch(setTotalUsersCount(data.totalCount));
   };
 };
-const followUnfollowFlow = async (dispatch: Dispatch, userId: number, apiMethod: any, actionCreator: any) => {
+const followUnfollowFlow = async (dispatch: Dispatch, userId: number, apiMethod: Function, actionCreator: Function) => {
   dispatch(toggleIsFollowingProgress(true, userId));
   let response = await apiMethod(userId)
 
