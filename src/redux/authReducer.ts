@@ -40,15 +40,13 @@ export const setAuthUserData = (data: DataType, isAuth: boolean) => {
 };
 
 //THUNK
-export const getAuthTC = () => {
-  return (dispatch: Dispatch) => {
-    return authAPI.getAuth().then((response) => {
-      if (response.data.resultCode === 0) {
-        dispatch(setAuthUserData(response.data.data, true));
+export const getAuthTC = () => async (dispatch: Dispatch) => {
+    const res = await authAPI.getAuth()
+      if (res.data.resultCode === 0) {
+        dispatch(setAuthUserData(res.data.data, true));
       }
-    });
-  };
-};
+    }
+
 export const loginTC = (email: string, password: string, rememberMe: boolean): AppThunk => {
   return async (dispatch) => {
     let response = await authAPI.login(email, password, rememberMe)

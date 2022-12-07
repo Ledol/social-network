@@ -15,24 +15,16 @@ export const LoginForm: FC<InjectedFormProps<FormDataType>> = (props) => {
     <form onSubmit={props.handleSubmit}>
       <div>
         <Field
-          placeholder={"Email"}
-          name={"email"}
-          component={Input}
-          validate={[required]}
+          placeholder={"Email"} name={"email"} component={Input} validate={[required]}
         />
       </div>
       <div>
         <Field
-          placeholder={"Password"}
-          name={"password"}
-          type={"password"}
-          component={Input}
-          validate={[required]}
+          placeholder={"Password"} name={"password"} type={"password"} component={Input} validate={[required]}
         />
       </div>
       <div>
-        <Field type="checkbox" name={"rememberMe"} component={Input} /> remember
-        me
+        <Field name={"rememberMe"} type="checkbox" component={Input} /> remember me
       </div>
       {props.error && (
         <div className={style.formSummaryError}>{props.error}</div>

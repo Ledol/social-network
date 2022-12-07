@@ -1,4 +1,4 @@
-import React from "react";
+import React, {FC} from "react";
 import style from "./ProfileInfo.module.css";
 import { ProfileType } from "../../../redux/profileReducer";
 import { Preloader } from "../../common/Preloader/Preloader";
@@ -11,8 +11,8 @@ type ProfileInfoPropsType = {
   updateStatus: (status: string) => void;
 };
 
-export const ProfileInfo = (props: ProfileInfoPropsType) => {
-  if (!props.profile) {
+export const  ProfileInfo: FC<ProfileInfoPropsType> = ({profile, status, updateStatus}) => {
+  if (!profile) {
     return <Preloader />;
   }
 
@@ -28,27 +28,27 @@ export const ProfileInfo = (props: ProfileInfoPropsType) => {
       <div className={style.descriptionBlock}>
         <img
           src={
-            props.profile.photos.large !== null
-              ? props.profile.photos.large
+            profile.photos.large !== null
+              ? profile.photos.large
               : userPhoto
           }
           alt="userProfile"
         />
-        {props.profile.userId === 25503 ? (
+        {profile.userId === 25503 ? (
           <h4>
             <ProfileStatus
-              status={props.status}
-              updateStatus={props.updateStatus}
+              status={status}
+              updateStatus={updateStatus}
             />
           </h4>
         ) : (
-          <h4>{props.status}</h4>
+          <h4>{status}</h4>
         )}
         {/*<h4><ProfileStatus status={props.status} updateStatus={props.updateStatus} /></h4>*/}
-        <div>Full Name: {props.profile.fullName}</div>
-        <div>About Me: {props.profile.aboutMe}</div>
-        <div>Facebook: {props.profile.contacts.facebook}</div>
-        <div>GitHub: {props.profile.contacts.github}</div>
+        <div>Full Name: {profile.fullName}</div>
+        <div>About Me: {profile.aboutMe}</div>
+        <div>Facebook: {profile.contacts.facebook}</div>
+        <div>GitHub: {profile.contacts.github}</div>
       </div>
     </div>
   );

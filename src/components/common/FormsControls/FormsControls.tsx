@@ -2,12 +2,12 @@ import React, { FC } from "react";
 import { WrappedFieldProps } from "redux-form";
 import style from "./FormsControls.module.css";
 
-const FormControl: FC<WrappedFieldProps> = ({ input, meta, ...props }) => {
-  const hasError = meta.touched && meta.error;
+const FormControl: FC<WrappedFieldProps> = ({ input, meta:{touched, error}, ...props }) => {
+  const hasError = touched && error;
   return (
     <div className={style.formControl + " " + (hasError ? style.error : "")}>
       <div>{props.children}</div>
-      {hasError && <span>{meta.error}</span>}
+      {hasError && <span>{error}</span>}
     </div>
   );
 };
